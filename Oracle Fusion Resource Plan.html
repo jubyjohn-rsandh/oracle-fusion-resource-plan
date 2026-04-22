@@ -1,0 +1,691 @@
+<!DOCTYPE html><script type="application/json" id="cowork-artifact-meta">
+{
+  "name": "Oracle Fusion Resource Plan",
+  "schemaVersion": 1,
+  "description": "Interactive Program Management Resource Plan for Oracle Fusion Cloud (ERP, CRM, EPM) — includes org chart, phase-based resource allocation table, staffing curve, and a live scenario planner with sliders."
+}
+</script>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Oracle Fusion Cloud — Program Resource Plan</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
+<style>
+:root{color-scheme:light;--navy:#0f2744;--navy2:#1a3a5c;--blue:#2563eb;--purple:#7c3aed;--green:#059669;--slate:#475569;--muted:#64748b;--border:#e2e8f0;--bg:#f1f5f9;--card:#fff;--text:#1e293b;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:13px;min-height:100vh;}
+.hdr{background:linear-gradient(135deg,#0f2744 0%,#1a3a5c 60%,#1e4976 100%);color:#fff;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.hdr-left h1{font-size:17px;font-weight:700;letter-spacing:-.3px;}
+.hdr-left p{font-size:11px;opacity:.65;margin-top:3px;}
+.hdr-badges{display:flex;gap:8px;flex-wrap:wrap;}
+.badge{padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700;}
+.b-erp{background:rgba(37,99,235,.35);color:#93c5fd;}
+.b-crm{background:rgba(124,58,237,.35);color:#c4b5fd;}
+.b-epm{background:rgba(5,150,105,.35);color:#6ee7b7;}
+.b-pgm{background:rgba(255,255,255,.15);color:#e2e8f0;}
+.tabs{background:#fff;border-bottom:2px solid var(--border);display:flex;padding:0 24px;gap:2px;overflow-x:auto;}
+.tab{padding:13px 16px;cursor:pointer;font-size:12px;font-weight:600;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .18s;white-space:nowrap;}
+.tab:hover{color:var(--blue);}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue);}
+.content{padding:20px 24px;}
+.panel{display:none;}
+.panel.active{display:block;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:16px;}
+.card-title{font-size:13px;font-weight:700;color:var(--navy2);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.card-title span{font-size:11px;font-weight:400;color:var(--muted);}
+
+/* ORG CHART */
+.org-wrap{overflow-x:auto;padding:16px 0;}
+.org-box{border-radius:8px;padding:9px 14px;text-align:center;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;}
+.ob-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;line-height:1.3;}
+.ob-sub{font-size:9.5px;opacity:.8;margin-top:2px;line-height:1.2;}
+.ob-pgm{background:var(--navy);color:#fff;min-width:210px;padding:12px 18px;}
+.ob-pgm .ob-label{font-size:13px;}
+.ob-support{background:var(--navy2);color:#fff;min-width:160px;}
+.ob-cm-peer{background:var(--navy2);color:#fff;min-width:170px;border:2px dashed rgba(255,255,255,.55);}
+.ob-erp{background:var(--blue);color:#fff;min-width:155px;}
+.ob-crm{background:var(--purple);color:#fff;min-width:155px;}
+.ob-epm{background:var(--green);color:#fff;min-width:155px;}
+.ob-sub-erp{background:#eff6ff;border:1.5px solid var(--blue);color:#1d4ed8;min-width:140px;}
+.ob-sub-crm{background:#f5f3ff;border:1.5px solid var(--purple);color:#5b21b6;min-width:140px;}
+.ob-sub-epm{background:#f0fdf4;border:1.5px solid var(--green);color:#065f46;min-width:140px;}
+.ob-rsh{background:#f8fafc;border:1.5px solid var(--border);color:var(--slate);min-width:140px;}
+.vline{width:2px;height:20px;background:#cbd5e1;margin:0 auto;}
+.ws-row{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;align-items:flex-start;}
+.ws-col{display:flex;flex-direction:column;align-items:center;}
+
+/* RESOURCE TABLE */
+.rtable{width:100%;border-collapse:collapse;font-size:12px;}
+.rtable th{background:#f8fafc;padding:9px 11px;text-align:left;font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid var(--border);white-space:nowrap;}
+.rtable td{padding:9px 11px;border-bottom:1px solid #f1f5f9;vertical-align:middle;}
+.rtable tr:hover td{background:#fafbfc;}
+.sec-hdr td{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#fff;padding:7px 11px;}
+.sec-pgm td{background:var(--navy2);}
+.sec-erp td{background:var(--blue);}
+.sec-crm td{background:var(--purple);}
+.sec-epm td{background:var(--green);}
+.ttag{font-size:10px;padding:2px 7px;border-radius:10px;font-weight:700;}
+.t-rsh{background:#dbeafe;color:#1d4ed8;}
+.t-si{background:#fce7f3;color:#9d174d;}
+.ac{text-align:center;}
+.abar{display:flex;flex-direction:column;align-items:center;gap:3px;}
+.abar-bg{width:48px;height:5px;background:#e2e8f0;border-radius:3px;overflow:hidden;}
+.abar-fill{height:100%;border-radius:3px;}
+.ftotal td{background:#f1f5f9;font-weight:700;border-top:2px solid #cbd5e1;}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px;}
+.scard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;}
+.sval{font-size:26px;font-weight:800;}
+.slbl{font-size:11px;color:var(--muted);margin-top:3px;}
+.ssub{font-size:10px;color:var(--muted);margin-top:2px;}
+
+/* TIMELINE */
+.phase-legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px;}
+.pleg-item{display:flex;align-items:center;gap:5px;font-size:11px;}
+.pleg-dot{width:11px;height:11px;border-radius:3px;flex-shrink:0;}
+.gantt{display:flex;flex-direction:column;gap:8px;}
+.grow{display:flex;align-items:center;gap:12px;}
+.glabel{width:155px;min-width:155px;font-size:11.5px;font-weight:500;text-align:right;color:var(--slate);}
+.gbars{display:flex;gap:3px;flex:1;}
+.gbar{border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:700;color:#fff;padding:7px 2px;overflow:hidden;white-space:nowrap;}
+.chart-wrap{position:relative;height:260px;}
+
+/* SCENARIO */
+.sc-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:800px){.sc-layout{grid-template-columns:1fr;}.stats{grid-template-columns:repeat(2,1fr);}}
+.sc-controls{max-height:560px;overflow-y:auto;padding-right:4px;}
+.sc-sec{margin-bottom:14px;border-radius:8px;overflow:hidden;border:1px solid var(--border);}
+.sc-sec-title{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;padding:8px 12px;color:#fff;}
+.sst-pgm{background:var(--navy2);}
+.sst-erp{background:var(--blue);}
+.sst-crm{background:var(--purple);}
+.sst-epm{background:var(--green);}
+.sc-role{padding:11px 12px;background:#fff;border-top:1px solid #f1f5f9;}
+.sc-rname{font-size:11.5px;font-weight:700;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
+.sc-sliders{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;}
+.sgrp{display:flex;flex-direction:column;align-items:center;gap:2px;}
+.slbl2{font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;}
+.sval2{font-size:11px;font-weight:800;color:var(--navy2);}
+input[type=range]{width:100%;cursor:pointer;height:4px;}
+.btn{padding:7px 14px;border-radius:6px;border:none;cursor:pointer;font-size:12px;font-weight:700;transition:opacity .15s;}
+.btn:hover{opacity:.85;}
+.btn-p{background:var(--blue);color:#fff;}
+.btn-s{background:#f1f5f9;color:var(--text);border:1px solid var(--border);}
+.btn-grp{display:flex;gap:8px;}
+.sc-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.delta-pos{color:#16a34a;font-weight:700;}
+.delta-neg{color:#dc2626;font-weight:700;}
+.delta-zero{color:var(--muted);}
+.insight{margin-top:12px;padding:10px 12px;background:#f0fdf4;border-radius:6px;border-left:3px solid #16a34a;font-size:11px;color:#166534;line-height:1.5;}
+.raci-wrap table{width:100%;border-collapse:collapse;font-size:11px;}
+.raci-wrap th{background:#f8fafc;padding:8px 10px;text-align:center;border:1px solid var(--border);font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;}
+.raci-wrap td{padding:7px 10px;border:1px solid #f1f5f9;text-align:center;}
+.raci-wrap tr td:first-child{text-align:left;font-weight:500;}
+.R{color:#dc2626;font-weight:800;}
+.A{color:#d97706;font-weight:800;}
+.C{color:#2563eb;font-weight:700;}
+.I{color:#94a3b8;font-weight:600;}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-left">
+    <h1>Oracle Fusion Cloud — Enterprise Transformation</h1>
+    <p>Program Management Resource Plan &nbsp;·&nbsp; RS&H &nbsp;·&nbsp; 18–24 Month Implementation &nbsp;·&nbsp; 5 Phases</p>
+  </div>
+  <div class="hdr-badges">
+    <span class="badge b-pgm">Program Office</span>
+    <span class="badge b-erp">ERP</span>
+    <span class="badge b-crm">CRM</span>
+    <span class="badge b-epm">EPM</span>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('org',this)">🏗 Org Chart</div>
+  <div class="tab" onclick="switchTab('resource',this)">👥 Resource Plan</div>
+  <div class="tab" onclick="switchTab('timeline',this)">📅 Phase Timeline</div>
+  <div class="tab" onclick="switchTab('scenario',this)">🎛 Scenario Planner</div>
+  <div class="tab" onclick="switchTab('raci',this)">📋 RACI</div>
+</div>
+
+<div class="content">
+
+<!-- ORG CHART -->
+<div class="panel active" id="tab-org">
+  <div class="card">
+    <div class="card-title">Program Organization Structure <span>Oracle Fusion Cloud ERP · CRM · EPM</span></div>
+    <div class="org-wrap">
+      <div style="display:flex;align-items:flex-start;justify-content:center;min-width:680px;">
+
+        <!-- ── Main vertical column: PM → Project Admin → workstreams ── -->
+        <div style="display:flex;flex-direction:column;align-items:center;">
+
+          <!-- Program Manager -->
+          <div class="org-box ob-pgm">
+            <div class="ob-label">Program Manager</div>
+            <div class="ob-sub">RS&H · Full Portfolio Oversight</div>
+          </div>
+          <div class="vline"></div>
+
+          <!-- Project Admin directly below PM -->
+          <div class="org-box ob-support">
+            <div class="ob-label">Project Admin / PMO Coordinator</div>
+            <div class="ob-sub">RS&H · Scheduling & Coordination</div>
+          </div>
+
+          <!-- Connector to workstreams -->
+          <div style="width:560px;margin-top:20px;position:relative;height:22px;">
+            <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:420px;height:2px;background:#cbd5e1;"></div>
+            <div style="position:absolute;top:0;left:calc(50% - 210px);width:2px;height:22px;background:#cbd5e1;"></div>
+            <div style="position:absolute;top:0;left:50%;width:2px;height:22px;background:#cbd5e1;"></div>
+            <div style="position:absolute;top:0;left:calc(50% + 210px);width:2px;height:22px;background:#cbd5e1;"></div>
+          </div>
+
+          <!-- 3 Workstreams -->
+          <div class="ws-row" style="margin-top:22px;">
+
+            <!-- ERP -->
+            <div class="ws-col">
+              <div class="org-box ob-erp">
+                <div class="ob-label">ERP Workstream</div>
+                <div class="ob-sub">Financials / SCM / HCM</div>
+              </div>
+              <div class="vline"></div>
+              <div class="org-box ob-sub-erp">
+                <div class="ob-label">SI PM (ERP)</div>
+                <div class="ob-sub">System Integrator Lead</div>
+              </div>
+              <div class="vline" style="height:12px;"></div>
+              <div class="org-box ob-rsh">
+                <div class="ob-label">Technical Lead (ERP)</div>
+                <div class="ob-sub">RS&H · Architecture</div>
+              </div>
+              <div class="vline" style="height:12px;"></div>
+              <div class="org-box ob-rsh">
+                <div class="ob-label">Business Lead (ERP)</div>
+                <div class="ob-sub">RS&H · Process Owner</div>
+              </div>
+            </div>
+
+            <!-- CRM -->
+            <div class="ws-col">
+              <div class="org-box ob-crm">
+                <div class="ob-label">CRM Workstream</div>
+                <div class="ob-sub">Sales / Service / Marketing</div>
+              </div>
+              <div class="vline"></div>
+              <div class="org-box ob-sub-crm">
+                <div class="ob-label">SI PM (CRM)</div>
+                <div class="ob-sub">System Integrator Lead</div>
+              </div>
+              <div class="vline" style="height:12px;"></div>
+              <div class="org-box ob-rsh">
+                <div class="ob-label">Technical Lead (CRM)</div>
+                <div class="ob-sub">RS&H · Architecture</div>
+              </div>
+              <div class="vline" style="height:12px;"></div>
+              <div class="org-box ob-rsh">
+                <div class="ob-label">Business Lead (CRM)</div>
+                <div class="ob-sub">RS&H · Process Owner</div>
+              </div>
+            </div>
+
+            <!-- EPM -->
+            <div class="ws-col">
+              <div class="org-box ob-epm">
+                <div class="ob-label">EPM Workstream</div>
+                <div class="ob-sub">Planning / Budgeting / Close</div>
+              </div>
+              <div class="vline"></div>
+              <div class="org-box ob-sub-epm">
+                <div class="ob-label">SI PM (EPM)</div>
+                <div class="ob-sub">System Integrator Lead</div>
+              </div>
+              <div class="vline" style="height:12px;"></div>
+              <div class="org-box ob-rsh">
+                <div class="ob-label">Technical Lead (EPM)</div>
+                <div class="ob-sub">RS&H · Architecture</div>
+              </div>
+              <div class="vline" style="height:12px;"></div>
+              <div class="org-box ob-rsh">
+                <div class="ob-label">Business Lead (EPM)</div>
+                <div class="ob-sub">RS&H · Process Owner</div>
+              </div>
+            </div>
+
+          </div><!-- /ws-row -->
+        </div><!-- /main column -->
+
+        <!-- ── Peer connection: dashed line → Change Mgmt Lead ── -->
+        <div style="display:flex;align-items:center;padding-top:27px;flex-shrink:0;">
+          <div style="width:22px;border-top:2px dashed #94a3b8;"></div>
+          <div class="org-box ob-cm-peer">
+            <div class="ob-label">Change Mgmt Lead</div>
+            <div class="ob-sub">RS&H · OCM · ERP · CRM · EPM</div>
+          </div>
+        </div>
+
+      </div><!-- /outer flex -->
+
+      <!-- Legend note -->
+      <div style="margin-top:20px;display:flex;gap:18px;justify-content:center;flex-wrap:wrap;font-size:11px;color:var(--muted);">
+        <span style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:24px;border-top:2px solid #cbd5e1;"></span> Reporting line</span>
+        <span style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:24px;border-top:2px dashed #94a3b8;"></span> Peer / program-level relationship</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Role Definitions & Responsibilities</div>
+    <table class="rtable" id="roleDescTable"></table>
+  </div>
+</div>
+
+<!-- RESOURCE PLAN -->
+<div class="panel" id="tab-resource">
+  <div class="stats" id="statsGrid"></div>
+  <div class="card">
+    <div class="card-title">Resource Allocation by Phase <span>Allocation % of FTE &nbsp;·&nbsp; Updates from Scenario Planner</span></div>
+    <table class="rtable" id="resourceTable"></table>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div class="panel" id="tab-timeline">
+  <div class="card">
+    <div class="card-title">Program Phases & Workstream Timeline</div>
+    <div class="phase-legend" id="phaseLegend"></div>
+    <div class="gantt" id="ganttChart"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Staffing Curve — Total FTEs by Month</div>
+    <div class="chart-wrap"><canvas id="staffingChart"></canvas></div>
+  </div>
+</div>
+
+<!-- SCENARIO PLANNER -->
+<div class="panel" id="tab-scenario">
+  <div class="sc-hdr">
+    <div>
+      <div style="font-size:14px;font-weight:800;color:var(--navy2);">🎛 Scenario Planner</div>
+      <div style="font-size:11.5px;color:var(--muted);margin-top:3px;">Drag sliders to adjust FTE allocations per phase. Charts, totals, and the Resource Plan update live.</div>
+    </div>
+    <div class="btn-grp">
+      <button class="btn btn-s" onclick="resetScenario()">↺ Reset Baseline</button>
+      <button class="btn btn-p" onclick="applyAndView()">✓ Apply & View Plan</button>
+    </div>
+  </div>
+  <div class="sc-layout">
+    <div class="sc-controls" id="scenarioControls"></div>
+    <div>
+      <div class="card">
+        <div class="card-title">FTE Totals by Phase</div>
+        <div class="chart-wrap" style="height:220px;"><canvas id="scenarioChart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Scenario vs. Baseline</div>
+        <div id="scenarioSummary"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RACI -->
+<div class="panel" id="tab-raci">
+  <div class="card">
+    <div class="card-title">RACI Matrix — Program Management Activities</div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:14px;display:flex;gap:18px;flex-wrap:wrap;">
+      <span><strong class="R">R</strong> = Responsible</span>
+      <span><strong class="A">A</strong> = Accountable</span>
+      <span><strong class="C">C</strong> = Consulted</span>
+      <span><strong class="I">I</strong> = Informed</span>
+    </div>
+    <div class="raci-wrap" style="overflow-x:auto;" id="raciTable"></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const PHASES=[
+  {id:'p1',label:'P1: Initiate & Plan',short:'P1',months:3,color:'#475569'},
+  {id:'p2',label:'P2: Design & Configure',short:'P2',months:6,color:'#2563eb'},
+  {id:'p3',label:'P3: Build & Integrate',short:'P3',months:6,color:'#7c3aed'},
+  {id:'p4',label:'P4: Test & Validate',short:'P4',months:4,color:'#d97706'},
+  {id:'p5',label:'P5: Deploy & Stabilize',short:'P5',months:5,color:'#059669'},
+];
+
+const RESOURCES=[
+  // ── Program Level ──────────────────────────────────────────
+  {id:'pgm',role:'Program Manager',cat:'Program',type:'RS&H',
+   alloc:[100,100,100,100,100],
+   desc:'Oversees the full Oracle Fusion Cloud portfolio across ERP, CRM, and EPM. Accountable for scope, schedule, budget, executive reporting, and cross-workstream risk management.'},
+  {id:'padmin',role:'Project Admin / PMO Coordinator',cat:'Program',type:'RS&H',
+   alloc:[100,100,100,100,100],
+   desc:'Manages scheduling, meeting coordination, action item tracking, document management, and general program administration. Single point of contact for all workstream meeting logistics and communications.'},
+  {id:'cml',role:'Change Management Lead',cat:'Program',type:'RS&H',
+   alloc:[50,75,100,100,100],
+   desc:'Peer-level program leader responsible for the end-to-end OCM strategy across all three workstreams (ERP, CRM, EPM). Owns stakeholder engagement, training strategy, change impact assessments, readiness surveys, and adoption tracking across the full program.'},
+
+  // ── ERP Workstream ─────────────────────────────────────────
+  {id:'erp_pm',role:'SI PM (ERP)',cat:'ERP',type:'SI',
+   alloc:[100,100,100,100,75],
+   desc:'System Integrator PM accountable for ERP workstream delivery — sprint planning, SI resourcing, deliverable quality, and ERP workstream governance with RS&H.'},
+  {id:'erp_tl',role:'Technical Lead (ERP)',cat:'ERP',type:'RS&H',
+   alloc:[50,100,100,75,50],
+   desc:'RS&H technical authority for ERP. Reviews integration designs, data migration approach, security architecture, and signs off on ERP technical acceptance criteria.'},
+  {id:'erp_bl',role:'Business Lead (ERP)',cat:'ERP',type:'RS&H',
+   alloc:[50,100,100,100,75],
+   desc:'RS&H process owner for ERP scope (Finance, SCM, HCM). Provides process requirements, leads design workshops, and drives business readiness for go-live.'},
+
+  // ── CRM Workstream ─────────────────────────────────────────
+  {id:'crm_pm',role:'SI PM (CRM)',cat:'CRM',type:'SI',
+   alloc:[100,100,100,100,75],
+   desc:'System Integrator PM accountable for CRM workstream delivery — sprint planning, SI resourcing, deliverable quality, and CRM workstream governance with RS&H.'},
+  {id:'crm_tl',role:'Technical Lead (CRM)',cat:'CRM',type:'RS&H',
+   alloc:[50,100,100,75,50],
+   desc:'RS&H technical authority for CRM. Oversees ERP/CRM integration design, data model, API architecture, and CRM technical acceptance criteria.'},
+  {id:'crm_bl',role:'Business Lead (CRM)',cat:'CRM',type:'RS&H',
+   alloc:[50,100,100,100,75],
+   desc:'RS&H process owner for CRM scope (Sales, Service, Marketing). Leads design workshops, process sign-off, and drives CRM user acceptance testing.'},
+
+  // ── EPM Workstream ─────────────────────────────────────────
+  {id:'epm_pm',role:'SI PM (EPM)',cat:'EPM',type:'SI',
+   alloc:[100,100,100,100,75],
+   desc:'System Integrator PM accountable for EPM workstream delivery — sprint planning, SI resourcing, deliverable quality, and EPM workstream governance with RS&H.'},
+  {id:'epm_tl',role:'Technical Lead (EPM)',cat:'EPM',type:'RS&H',
+   alloc:[50,100,100,75,50],
+   desc:'RS&H technical authority for EPM. Manages financial data integration from ERP to EPM, planning model architecture, and EPM technical acceptance criteria.'},
+  {id:'epm_bl',role:'Business Lead (EPM)',cat:'EPM',type:'RS&H',
+   alloc:[50,100,100,100,75],
+   desc:'RS&H process owner for EPM scope (Planning, Budgeting, Forecasting, Close). Leads design, drives UAT, and ensures finance team readiness for go-live.'},
+];
+
+const RACI=[
+  {activity:'Program Governance & Steering',     pgm:'A/R', padmin:'C',   cml:'I',   sipm:'C',   tl:'I',   bl:'I'},
+  {activity:'Schedule & Meeting Management',      pgm:'A',   padmin:'R',   cml:'I',   sipm:'C',   tl:'I',   bl:'I'},
+  {activity:'Status Reporting & Dashboards',      pgm:'A',   padmin:'R',   cml:'I',   sipm:'R',   tl:'I',   bl:'I'},
+  {activity:'Risk & Issue Management (RAID)',     pgm:'A',   padmin:'R',   cml:'C',   sipm:'R',   tl:'C',   bl:'C'},
+  {activity:'Budget & Financial Tracking',        pgm:'A/R', padmin:'R',   cml:'I',   sipm:'C',   tl:'I',   bl:'I'},
+  {activity:'Cross-WS Dependency Tracking',       pgm:'A',   padmin:'R',   cml:'C',   sipm:'C',   tl:'C',   bl:'I'},
+  {activity:'Workstream Delivery (ERP/CRM/EPM)',  pgm:'A',   padmin:'I',   cml:'C',   sipm:'R',   tl:'C',   bl:'C'},
+  {activity:'Solution Design & Workshops',        pgm:'A',   padmin:'I',   cml:'C',   sipm:'R',   tl:'C',   bl:'R'},
+  {activity:'Technical Architecture & Integration',pgm:'I',  padmin:'I',   cml:'I',   sipm:'C',   tl:'R/A', bl:'C'},
+  {activity:'Change Impact Assessment',           pgm:'A',   padmin:'I',   cml:'R',   sipm:'C',   tl:'I',   bl:'C'},
+  {activity:'Training Design & Delivery',         pgm:'A',   padmin:'I',   cml:'R',   sipm:'C',   tl:'I',   bl:'C'},
+  {activity:'Stakeholder Engagement (All WS)',    pgm:'A',   padmin:'I',   cml:'R',   sipm:'I',   tl:'I',   bl:'C'},
+  {activity:'User Acceptance Testing',            pgm:'A',   padmin:'I',   cml:'C',   sipm:'R',   tl:'C',   bl:'R'},
+  {activity:'Go-Live Readiness Assessment',       pgm:'A/R', padmin:'C',   cml:'R',   sipm:'R',   tl:'C',   bl:'R'},
+  {activity:'Stakeholder Communications',         pgm:'A',   padmin:'R',   cml:'R',   sipm:'I',   tl:'I',   bl:'I'},
+  {activity:'Vendor & SI Contract Management',    pgm:'A/R', padmin:'C',   cml:'I',   sipm:'I',   tl:'I',   bl:'I'},
+];
+
+let scenarioAlloc=RESOURCES.map(r=>[...r.alloc]);
+let sfChart=null,scChart=null;
+
+// ============================================================
+// UTILS
+// ============================================================
+function catColor(c){
+  if(c==='ERP')return'#2563eb';
+  if(c==='CRM')return'#7c3aed';
+  if(c==='EPM')return'#059669';
+  return'#1a3a5c';
+}
+function allocClass(v){
+  return v>=80?'color:#1d4ed8;font-weight:700':v>=50?'color:#d97706;font-weight:700':v>0?'color:#64748b':'color:#d1d5db';
+}
+function phaseFTEs(alloc){
+  return PHASES.map((_,pi)=>+(alloc.reduce((a,row)=>a+row[pi],0)/100).toFixed(2));
+}
+function baselineFTEs(){return phaseFTEs(RESOURCES.map(r=>[...r.alloc]));}
+
+function switchTab(id,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  el.classList.add('active');
+  if(id==='timeline')renderStaffingChart();
+  if(id==='scenario')renderScenarioChart();
+  if(id==='resource')renderStats();
+  if(id==='raci')renderRaci();
+}
+
+// ============================================================
+// ROLE DESCRIPTIONS
+// ============================================================
+function renderRoleDesc(){
+  const t=document.getElementById('roleDescTable');
+  t.innerHTML=`<thead><tr><th>Role</th><th>Workstream</th><th>Type</th><th style="min-width:280px">Key Responsibilities</th></tr></thead>
+  <tbody>${RESOURCES.map(r=>`
+    <tr>
+      <td style="font-weight:600;white-space:nowrap;">${r.role}</td>
+      <td style="color:${catColor(r.cat)};font-weight:700;">${r.cat}</td>
+      <td><span class="ttag ${r.type==='RS&H'?'t-rsh':'t-si'}">${r.type}</span></td>
+      <td style="color:#475569;font-size:11.5px;">${r.desc}</td>
+    </tr>`).join('')}</tbody>`;
+}
+
+// ============================================================
+// STATS + RESOURCE TABLE
+// ============================================================
+function renderStats(){
+  const totals=phaseFTEs(scenarioAlloc);
+  const peak=Math.max(...totals);
+  const rshCount=RESOURCES.filter(r=>r.type==='RS&H').length;
+  const siCount=RESOURCES.filter(r=>r.type==='SI').length;
+  document.getElementById('statsGrid').innerHTML=`
+    <div class="scard"><div class="sval" style="color:#0f2744">${RESOURCES.length}</div><div class="slbl">Total Roles</div><div class="ssub">${rshCount} RS&H · ${siCount} SI</div></div>
+    <div class="scard"><div class="sval" style="color:#2563eb">${peak.toFixed(1)}</div><div class="slbl">Peak FTEs</div><div class="ssub">Phase 3: Build & Integrate</div></div>
+    <div class="scard"><div class="sval" style="color:#7c3aed">24</div><div class="slbl">Duration (Months)</div><div class="ssub">5 Structured Phases</div></div>
+    <div class="scard"><div class="sval" style="color:#059669">3</div><div class="slbl">Workstreams</div><div class="ssub">ERP · CRM · EPM</div></div>`;
+  renderResourceTable();
+}
+
+function renderResourceTable(){
+  const cats=['Program','ERP','CRM','EPM'];
+  const catLabel={'Program':'🎯 Program Level','ERP':'🔷 ERP Workstream','CRM':'🔷 CRM Workstream','EPM':'🔷 EPM Workstream'};
+  const catSecClass={'Program':'sec-pgm','ERP':'sec-erp','CRM':'sec-crm','EPM':'sec-epm'};
+  let html=`<thead><tr><th>Role</th><th>Type</th>${PHASES.map(p=>`<th class="ac">${p.short}<br><span style="font-weight:400;font-size:9.5px;">${p.months}mo</span></th>`).join('')}<th class="ac">Peak</th></tr></thead><tbody>`;
+  cats.forEach(cat=>{
+    const rs=RESOURCES.filter(r=>r.cat===cat);
+    html+=`<tr class="sec-hdr ${catSecClass[cat]}"><td colspan="8">${catLabel[cat]}</td></tr>`;
+    rs.forEach(r=>{
+      const ri=RESOURCES.indexOf(r);
+      const a=scenarioAlloc[ri];
+      const peak=Math.max(...a);
+      html+=`<tr>
+        <td style="font-weight:500">${r.role}</td>
+        <td><span class="ttag ${r.type==='RS&H'?'t-rsh':'t-si'}">${r.type}</span></td>
+        ${a.map((v,pi)=>`<td class="ac">
+          <div class="abar">
+            <span style="${allocClass(v)}">${v>0?v+'%':'—'}</span>
+            <div class="abar-bg"><div class="abar-fill" style="width:${v}%;background:${catColor(cat)};opacity:.75;"></div></div>
+          </div></td>`).join('')}
+        <td class="ac"><strong style="color:${catColor(cat)}">${(peak/100).toFixed(1)}</strong></td>
+      </tr>`;
+    });
+  });
+  const totals=phaseFTEs(scenarioAlloc);
+  html+=`<tr class="ftotal"><td colspan="2">Total FTEs</td>${totals.map(t=>`<td class="ac" style="font-size:14px;color:#0f2744;">${t.toFixed(1)}</td>`).join('')}<td class="ac" style="font-size:14px;color:#0f2744;">${Math.max(...totals).toFixed(1)}</td></tr></tbody>`;
+  document.getElementById('resourceTable').innerHTML=html;
+}
+
+// ============================================================
+// STAFFING CHART + GANTT
+// ============================================================
+function renderStaffingChart(){
+  const months=[],ftEs=[],colors=[];
+  let m=1;
+  PHASES.forEach((p,pi)=>{
+    const fte=+(RESOURCES.reduce((a,r,ri)=>a+scenarioAlloc[ri][pi],0)/100).toFixed(2);
+    for(let i=0;i<p.months;i++){months.push('M'+m);ftEs.push(fte);colors.push(p.color+'cc');m++;}
+  });
+  document.getElementById('phaseLegend').innerHTML=PHASES.map(p=>`<div class="pleg-item"><div class="pleg-dot" style="background:${p.color}"></div><span>${p.label} (${p.months} mo)</span></div>`).join('');
+  const ctx=document.getElementById('staffingChart').getContext('2d');
+  if(sfChart)sfChart.destroy();
+  sfChart=new Chart(ctx,{type:'bar',data:{labels:months,datasets:[{label:'FTEs',data:ftEs,backgroundColor:colors,borderColor:colors.map(c=>c.replace('cc','ff')),borderWidth:1,borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`FTEs: ${c.raw}`,afterLabel:c=>{let cum=0;for(let pi=0;pi<PHASES.length;pi++){cum+=PHASES[pi].months;if(c.dataIndex<cum)return PHASES[pi].label;}return'';}}},},scales:{y:{beginAtZero:true,title:{display:true,text:'FTEs'},grid:{color:'#f1f5f9'}},x:{grid:{display:false}}}}});
+  renderGantt();
+}
+
+function renderGantt(){
+  const total=PHASES.reduce((a,p)=>a+p.months,0);
+  const rows=[
+    {label:'Program Office'},
+    {label:'ERP Workstream'},
+    {label:'CRM Workstream'},
+    {label:'EPM Workstream'},
+    {label:'Change Mgmt Lead',skipP1:true},
+    {label:'Project Admin'},
+  ];
+  document.getElementById('ganttChart').innerHTML=rows.map((row,ri)=>`
+    <div class="grow">
+      <div class="glabel">${row.label}</div>
+      <div class="gbars">
+        ${PHASES.map((p,pi)=>{
+          const skip=(ri===4&&pi===0);
+          const w=(p.months/total*100).toFixed(1);
+          return`<div class="gbar" style="width:${w}%;background:${skip?'#e2e8f0':p.color};color:${skip?'#94a3b8':'#fff'}">${p.short}</div>`;
+        }).join('')}
+      </div>
+    </div>`).join('');
+}
+
+// ============================================================
+// SCENARIO PLANNER
+// ============================================================
+function renderScenarioControls(){
+  const cats=['Program','ERP','CRM','EPM'];
+  const titles={'Program':'🎯 Program Level','ERP':'🔷 ERP Workstream','CRM':'🔷 CRM Workstream','EPM':'🔷 EPM Workstream'};
+  const cls={'Program':'sst-pgm','ERP':'sst-erp','CRM':'sst-crm','EPM':'sst-epm'};
+  document.getElementById('scenarioControls').innerHTML=cats.map(cat=>{
+    const rs=RESOURCES.filter(r=>r.cat===cat);
+    return`<div class="sc-sec">
+      <div class="sc-sec-title ${cls[cat]}">${titles[cat]}</div>
+      ${rs.map(r=>{
+        const ri=RESOURCES.indexOf(r);
+        return`<div class="sc-role">
+          <div class="sc-rname">
+            <span>${r.role}</span>
+            <span class="ttag ${r.type==='RS&H'?'t-rsh':'t-si'}">${r.type}</span>
+          </div>
+          <div class="sc-sliders">
+            ${PHASES.map((p,pi)=>`
+              <div class="sgrp">
+                <div class="slbl2">${p.short}</div>
+                <div class="sval2" id="sv-${ri}-${pi}">${scenarioAlloc[ri][pi]}%</div>
+                <input type="range" min="0" max="100" step="25" value="${scenarioAlloc[ri][pi]}"
+                  style="accent-color:${catColor(cat)}"
+                  oninput="updateSc(${ri},${pi},this.value)">
+              </div>`).join('')}
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`;
+  }).join('');
+}
+
+function updateSc(ri,pi,val){
+  scenarioAlloc[ri][pi]=+val;
+  document.getElementById(`sv-${ri}-${pi}`).textContent=val+'%';
+  renderScenarioChart();
+}
+
+function renderScenarioChart(){
+  const sc=phaseFTEs(scenarioAlloc);
+  const bl=baselineFTEs();
+  const ctx=document.getElementById('scenarioChart').getContext('2d');
+  if(scChart)scChart.destroy();
+  scChart=new Chart(ctx,{data:{labels:PHASES.map(p=>p.short),datasets:[
+    {type:'bar',label:'Scenario FTEs',data:sc,backgroundColor:PHASES.map(p=>p.color+'bb'),borderColor:PHASES.map(p=>p.color),borderWidth:1.5,borderRadius:4},
+    {type:'line',label:'Baseline FTEs',data:bl,borderColor:'#94a3b8',borderWidth:1.5,borderDash:[5,3],pointRadius:4,pointBackgroundColor:'#94a3b8',fill:false,backgroundColor:'transparent',tension:.3}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:14}},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${(+c.raw).toFixed(1)} FTEs`}}},scales:{y:{beginAtZero:true,title:{display:true,text:'FTEs'},grid:{color:'#f1f5f9'}},x:{grid:{display:false}}}}});
+  renderScenarioSummary();
+}
+
+function renderScenarioSummary(){
+  const sc=phaseFTEs(scenarioAlloc);
+  const bl=baselineFTEs();
+  const totalDays=scenarioAlloc.reduce((a,row)=>a+row.reduce((b,v,pi)=>b+(v/100)*PHASES[pi].months*22,0),0);
+  const rows=PHASES.map((p,pi)=>{
+    const d=(sc[pi]-bl[pi]);
+    const dcls=d>0?'delta-pos':d<0?'delta-neg':'delta-zero';
+    return`<tr>
+      <td style="padding:7px 10px;border-bottom:1px solid #f1f5f9;font-weight:500">${p.label}</td>
+      <td style="padding:7px 10px;text-align:center;border-bottom:1px solid #f1f5f9;">${bl[pi].toFixed(1)}</td>
+      <td style="padding:7px 10px;text-align:center;border-bottom:1px solid #f1f5f9;font-weight:700;">${sc[pi].toFixed(1)}</td>
+      <td style="padding:7px 10px;text-align:center;border-bottom:1px solid #f1f5f9;" class="${dcls}">${d>=0?'+':''}${d.toFixed(1)}</td>
+    </tr>`;
+  }).join('');
+  const pkBl=Math.max(...bl),pkSc=Math.max(...sc),pkD=pkSc-pkBl;
+  document.getElementById('scenarioSummary').innerHTML=`
+    <table style="width:100%;border-collapse:collapse;font-size:12px;">
+      <thead><tr style="background:#f8fafc;">
+        <th style="padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);font-size:10.5px;color:var(--muted);text-transform:uppercase;">Phase</th>
+        <th style="padding:8px 10px;text-align:center;border-bottom:1px solid var(--border);font-size:10.5px;color:var(--muted);text-transform:uppercase;">Baseline</th>
+        <th style="padding:8px 10px;text-align:center;border-bottom:1px solid var(--border);font-size:10.5px;color:var(--muted);text-transform:uppercase;">Scenario</th>
+        <th style="padding:8px 10px;text-align:center;border-bottom:1px solid var(--border);font-size:10.5px;color:var(--muted);text-transform:uppercase;">Δ</th>
+      </tr></thead>
+      <tbody>${rows}
+        <tr style="background:#f8fafc;font-weight:700;">
+          <td style="padding:8px 10px;">Peak FTE</td>
+          <td style="padding:8px 10px;text-align:center;">${pkBl.toFixed(1)}</td>
+          <td style="padding:8px 10px;text-align:center;">${pkSc.toFixed(1)}</td>
+          <td style="padding:8px 10px;text-align:center;" class="${pkD>0?'delta-pos':pkD<0?'delta-neg':'delta-zero'}">${pkD>=0?'+':''}${pkD.toFixed(1)}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="insight">💡 Estimated total person-days in scenario: <strong>${Math.round(totalDays).toLocaleString()} days</strong> across all ${RESOURCES.length} roles and 5 phases.</div>`;
+}
+
+function resetScenario(){
+  scenarioAlloc=RESOURCES.map(r=>[...r.alloc]);
+  renderScenarioControls();
+  renderScenarioChart();
+}
+
+function applyAndView(){
+  renderStats();
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-resource').classList.add('active');
+  document.querySelector('.tab[onclick*="resource"]').classList.add('active');
+}
+
+// ============================================================
+// RACI
+// ============================================================
+function renderRaci(){
+  const cols=['pgm','padmin','cml','sipm','tl','bl'];
+  const colLabels={pgm:'Program Mgr',padmin:'Project Admin',cml:'CM Lead',sipm:'SI PMs (per WS)',tl:'Tech Leads',bl:'Business Leads'};
+  let html=`<table><thead><tr><th style="text-align:left;min-width:220px;">Activity</th>${cols.map(c=>`<th style="min-width:100px;">${colLabels[c]}</th>`).join('')}</tr></thead><tbody>`;
+  RACI.forEach(row=>{
+    html+=`<tr><td style="font-weight:500;text-align:left;">${row.activity}</td>`;
+    cols.forEach(c=>{
+      const v=row[c]||'';
+      const cls=v.startsWith('A')?'A':v.startsWith('R')?'R':v==='C'?'C':v==='I'?'I':'';
+      html+=`<td class="${cls}">${v||'—'}</td>`;
+    });
+    html+=`</tr>`;
+  });
+  html+=`</tbody></table>`;
+  document.getElementById('raciTable').innerHTML=html;
+}
+
+// ============================================================
+// INIT
+// ============================================================
+renderRoleDesc();
+renderStats();
+renderScenarioControls();
+renderScenarioChart();
+</script>
+</body>
+</html>
