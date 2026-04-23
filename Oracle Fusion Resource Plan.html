@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Oracle Fusion Cloud — Program Resource Plan</title>
+<title>Enterprise Transformation — Program Resource Plan</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
 <style>
 :root{color-scheme:light;--navy:#0f2744;--navy2:#1a3a5c;--blue:#2563eb;--purple:#7c3aed;--green:#059669;--teal:#0f766e;--orange:#ea580c;--slate:#475569;--muted:#64748b;--border:#e2e8f0;--bg:#f1f5f9;--card:#fff;--text:#1e293b;}
@@ -49,13 +49,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .ob-sub-epm{background:#f0fdf4;border:1.5px solid var(--green);color:#065f46;min-width:100px;}
 .ob-sub-adp{background:#fff7ed;border:1.5px solid var(--orange);color:#9a3412;min-width:100px;}
 .ob-rsh{background:#f8fafc;border:1.5px solid var(--border);color:var(--slate);min-width:100px;}
+.ob-rsh-erp{background:#fff;border:2px solid var(--blue);color:#1d4ed8;min-width:100px;}
+.ob-rsh-crm{background:#fff;border:2px solid var(--purple);color:#5b21b6;min-width:100px;}
+.ob-rsh-epm{background:#fff;border:2px solid var(--green);color:#065f46;min-width:100px;}
+.ob-rsh-adp{background:#fff;border:2px solid var(--orange);color:#9a3412;min-width:100px;}
 .ob-si-erp{background:#eff6ff;border:1.5px solid #93c5fd;color:#1e40af;min-width:100px;}
 .ob-si-crm{background:#f5f3ff;border:1.5px solid #c4b5fd;color:#5b21b6;min-width:100px;}
 .ob-si-epm{background:#f0fdf4;border:1.5px solid #6ee7b7;color:#065f46;min-width:100px;}
 .ob-adp-role{background:#fff7ed;border:1.5px solid #fb923c;color:#9a3412;min-width:100px;}
 .ob-hackett{background:#fefce8;border:1.5px solid #ca8a04;color:#713f12;min-width:100px;}
 .ob-process{background:#ecfdf5;border:2px solid var(--teal);color:#134e4a;min-width:138px;font-weight:700;}
-.ob-cm{background:var(--navy2);color:#fff;min-width:138px;}
+.ob-cm{background:var(--teal);color:#fff;min-width:138px;}
 .vline{width:2px;height:18px;background:#cbd5e1;margin:0 auto;}
 .ws-row{display:flex;gap:16px;justify-content:center;flex-wrap:nowrap;align-items:flex-start;}
 .ws-col{display:flex;flex-direction:column;align-items:center;}
@@ -140,7 +144,7 @@ input[type=range]{width:100%;cursor:pointer;height:4px;}
 
 <div class="hdr">
   <div class="hdr-left">
-    <h1>Oracle Fusion Cloud — Enterprise Transformation</h1>
+    <h1>Enterprise Transformation</h1>
     <p>Program Management Resource Plan &nbsp;·&nbsp; RS&amp;H &nbsp;·&nbsp; 18–24 Month Implementation &nbsp;·&nbsp; 5 Phases</p>
   </div>
   <div class="hdr-badges">
@@ -165,7 +169,7 @@ input[type=range]{width:100%;cursor:pointer;height:4px;}
 <!-- ORG CHART -->
 <div class="panel active" id="tab-org">
   <div class="card">
-    <div class="card-title">Program Organization Structure <span>Oracle Fusion Cloud ERP · CRM · EPM · ADP Lyric</span></div>
+    <div class="card-title">Program Organization Structure <span>ERP · CRM · EPM · ADP Lyric</span></div>
     <div class="org-wrap">
       <div style="min-width:1500px;">
 
@@ -240,7 +244,7 @@ input[type=range]{width:100%;cursor:pointer;height:4px;}
                 </div>
                 <div style="display:flex;gap:8px;margin-top:22px;align-items:flex-start;">
                   <div class="ws-col" style="width:106px;">
-                    <div class="org-box ob-rsh" style="width:100%;"><div class="ob-label">Technology Team</div><div class="ob-sub">RS&amp;H · Data, Integration &amp; Architecture</div></div>
+                    <div class="org-box ob-rsh-erp" style="width:100%;"><div class="ob-label">Technology Team</div><div class="ob-sub">RS&amp;H · Data, Integration &amp; Architecture</div></div>
                   </div>
                   <div class="ws-col" style="width:106px;">
                     <div class="org-box ob-sub-erp" style="width:100%;"><div class="ob-label">SI PM (ERP)</div><div class="ob-sub">System Integrator Lead</div></div>
@@ -265,7 +269,7 @@ input[type=range]{width:100%;cursor:pointer;height:4px;}
                 </div>
                 <div style="display:flex;gap:8px;margin-top:22px;align-items:flex-start;">
                   <div class="ws-col" style="width:106px;">
-                    <div class="org-box ob-rsh" style="width:100%;"><div class="ob-label">Technology Team</div><div class="ob-sub">RS&amp;H · Data, Integration &amp; Architecture</div></div>
+                    <div class="org-box ob-rsh-crm" style="width:100%;"><div class="ob-label">Technology Team</div><div class="ob-sub">RS&amp;H · Data, Integration &amp; Architecture</div></div>
                   </div>
                   <div class="ws-col" style="width:106px;">
                     <div class="org-box ob-sub-crm" style="width:100%;"><div class="ob-label">SI PM (CRM)</div><div class="ob-sub">System Integrator Lead</div></div>
@@ -290,7 +294,7 @@ input[type=range]{width:100%;cursor:pointer;height:4px;}
                 </div>
                 <div style="display:flex;gap:8px;margin-top:22px;align-items:flex-start;">
                   <div class="ws-col" style="width:106px;">
-                    <div class="org-box ob-rsh" style="width:100%;"><div class="ob-label">Technology Team</div><div class="ob-sub">RS&amp;H · Data, Integration &amp; Architecture</div></div>
+                    <div class="org-box ob-rsh-epm" style="width:100%;"><div class="ob-label">Technology Team</div><div class="ob-sub">RS&amp;H · Data, Integration &amp; Architecture</div></div>
                   </div>
                   <div class="ws-col" style="width:106px;">
                     <div class="org-box ob-sub-epm" style="width:100%;"><div class="ob-label">SI PM (EPM)</div><div class="ob-sub">System Integrator Lead</div></div>
@@ -314,7 +318,7 @@ input[type=range]{width:100%;cursor:pointer;height:4px;}
                   <div style="position:absolute;top:8px;right:10%;width:2px;height:14px;background:#cbd5e1;"></div>
                 </div>
                 <div style="display:flex;gap:8px;margin-top:22px;align-items:flex-start;">
-                  <div class="org-box ob-rsh" style="width:106px;"><div class="ob-label">HCM Team</div><div class="ob-sub">RS&amp;H · HCM</div></div>
+                  <div class="org-box ob-rsh-adp" style="width:106px;"><div class="ob-label">HCM Team</div><div class="ob-sub">RS&amp;H · HCM</div></div>
                   <div class="org-box ob-adp-role" style="width:106px;"><div class="ob-label">ADP Implementation Team</div><div class="ob-sub">ADP · Lyric Delivery</div></div>
                 </div>
               </div>
@@ -342,7 +346,7 @@ input[type=range]{width:100%;cursor:pointer;height:4px;}
 
               <!-- Process Team branch -->
               <div class="ws-col" style="width:163px;">
-                <div class="org-box ob-process" style="width:100%;"><div class="ob-label">Process Team</div><div class="ob-sub">RS&amp;H · Business Process Owners</div></div>
+                <div class="org-box ob-process" style="width:100%;"><div class="ob-label">Process Team</div><div class="ob-sub">RS&amp;H · Business Process</div></div>
                 <div style="position:relative;height:22px;width:150px;margin-top:16px;">
                   <div style="position:absolute;top:0;left:50%;width:2px;height:8px;background:#cbd5e1;transform:translateX(-50%);"></div>
                   <div style="position:absolute;top:8px;left:8%;right:8%;height:2px;background:#cbd5e1;"></div>
@@ -473,25 +477,25 @@ const PHASES=[
 const RESOURCES=[
   // Program
   {id:'pgm',role:'Program Manager',cat:'Program',type:'RS&H',alloc:[100,100,100,100,100],
-   desc:'Reports to Technology Owner. Oversees full Oracle Fusion Cloud and ADP Lyric portfolio. Accountable for scope, schedule, budget, executive reporting, and cross-workstream risk management.'},
+   desc:'Reports to Technology Owner. Oversees full ERP, CRM, EPM and ADP Lyric portfolio. Accountable for scope, schedule, budget, executive reporting, and cross-workstream risk management.'},
   {id:'padmin',role:'Project Admin / PMO Coordinator',cat:'Program',type:'RS&H',alloc:[100,100,100,100,100],
    desc:'Manages scheduling, meeting coordination, action item tracking, and document management across all workstreams.'},
   // ERP
   {id:'erp_pm',role:'SI PM (ERP)',cat:'ERP',type:'SI',alloc:[100,100,100,100,75],desc:'System Integrator PM accountable for ERP workstream delivery — sprint planning, SI resourcing, and ERP governance with RS&H.'},
   {id:'erp_tl',role:'Technology Team (ERP)',cat:'ERP',type:'RS&H',alloc:[50,100,100,75,50],desc:'RS&H technical authority for ERP. Oversees data, integration, and architecture across the ERP workstream. Reviews integration designs, data migration approach, and security architecture.'},
-  {id:'erp_fc',role:'Functional Consultant (ERP)',cat:'ERP',type:'SI',alloc:[25,100,100,75,25],desc:'Configures Oracle Fusion ERP modules (Financials, SCM, HCM). Leads fit-gap analysis and functional testing.'},
-  {id:'erp_id',role:'Integration Developer (ERP)',cat:'ERP',type:'SI',alloc:[0,75,100,100,50],desc:'Develops Oracle Integration Cloud (OIC) connections and APIs for ERP. Responsible for integration testing.'},
+  {id:'erp_fc',role:'Functional Consultant (ERP)',cat:'ERP',type:'SI',alloc:[25,100,100,75,25],desc:'Configures ERP modules (Financials, SCM, HCM). Leads fit-gap analysis and functional testing.'},
+  {id:'erp_id',role:'Integration Developer (ERP)',cat:'ERP',type:'SI',alloc:[0,75,100,100,50],desc:'Develops OIC connections and APIs for ERP. Responsible for integration testing.'},
   {id:'erp_dm',role:'Data Migration Lead (ERP)',cat:'ERP',type:'SI',alloc:[25,75,100,100,25],desc:'Manages data extraction, transformation, and load (ETL) for ERP. Oversees data quality and cutover activities.'},
   // CRM
   {id:'crm_pm',role:'SI PM (CRM)',cat:'CRM',type:'SI',alloc:[100,100,100,100,75],desc:'System Integrator PM accountable for CRM workstream delivery and CRM governance with RS&H.'},
   {id:'crm_tl',role:'Technology Team (CRM)',cat:'CRM',type:'RS&H',alloc:[50,100,100,75,50],desc:'RS&H technical authority for CRM. Oversees data, integration, and architecture across the CRM workstream. Manages ERP/CRM integration design, data model, and API architecture.'},
-  {id:'crm_fc',role:'Functional Consultant (CRM)',cat:'CRM',type:'SI',alloc:[25,100,100,75,25],desc:'Configures Oracle Fusion CRM (Sales, Service, Marketing). Leads fit-gap analysis and functional testing.'},
-  {id:'crm_id',role:'Integration Developer (CRM)',cat:'CRM',type:'SI',alloc:[0,75,100,100,50],desc:'Develops integrations between Oracle CRM and other enterprise systems.'},
+  {id:'crm_fc',role:'Functional Consultant (CRM)',cat:'CRM',type:'SI',alloc:[25,100,100,75,25],desc:'Configures CRM modules (Sales, Service, Marketing). Leads fit-gap analysis and functional testing.'},
+  {id:'crm_id',role:'Integration Developer (CRM)',cat:'CRM',type:'SI',alloc:[0,75,100,100,50],desc:'Develops integrations between CRM and other enterprise systems.'},
   {id:'crm_dm',role:'Data Migration Lead (CRM)',cat:'CRM',type:'SI',alloc:[25,75,100,100,25],desc:'Manages data migration for CRM (accounts, contacts, opportunities). Oversees data quality and cutover.'},
   // EPM
   {id:'epm_pm',role:'SI PM (EPM)',cat:'EPM',type:'SI',alloc:[100,100,100,100,75],desc:'System Integrator PM accountable for EPM workstream delivery and EPM governance with RS&H.'},
   {id:'epm_tl',role:'Technology Team (EPM)',cat:'EPM',type:'RS&H',alloc:[50,100,100,75,50],desc:'RS&H technical authority for EPM. Oversees data, integration, and architecture for the EPM workstream. Manages financial data integration from ERP to EPM and planning model architecture.'},
-  {id:'epm_fc',role:'Functional Consultant (EPM)',cat:'EPM',type:'SI',alloc:[25,100,100,75,25],desc:'Configures Oracle EPM (Planning, Budgeting, Forecasting, Close). Leads model design and functional testing.'},
+  {id:'epm_fc',role:'Functional Consultant (EPM)',cat:'EPM',type:'SI',alloc:[25,100,100,75,25],desc:'Configures EPM modules (Planning, Budgeting, Forecasting, Close). Leads model design and functional testing.'},
   {id:'epm_id',role:'Integration Developer (EPM)',cat:'EPM',type:'SI',alloc:[0,75,100,100,50],desc:'Develops data pipelines between ERP and EPM for financial reporting and planning.'},
   {id:'epm_dm',role:'Data Migration Lead (EPM)',cat:'EPM',type:'SI',alloc:[25,75,100,100,25],desc:'Manages EPM data setup including hierarchies, dimensions, and historical data loads.'},
   // ADP Lyric
