@@ -39,21 +39,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .ob-owner{background:linear-gradient(135deg,#0f2744,#1a3a5c);color:#fff;min-width:185px;padding:12px 18px;box-shadow:0 2px 8px rgba(15,39,68,.25);}
 .ob-bpo{background:linear-gradient(135deg,#065f46,#0f766e);color:#fff;min-width:185px;padding:12px 18px;box-shadow:0 2px 8px rgba(6,95,70,.25);}
 .ob-pgm{background:var(--navy);color:#fff;min-width:190px;padding:11px 16px;}
-.ob-support{background:var(--navy2);color:#fff;min-width:180px;}
+.ob-support{background:var(--navy2);color:#fff;min-width:160px;}
 .ob-erp{background:var(--blue);color:#fff;min-width:138px;}
 .ob-crm{background:var(--purple);color:#fff;min-width:138px;}
 .ob-epm{background:var(--green);color:#fff;min-width:138px;}
 .ob-adp-ws{background:var(--orange);color:#fff;min-width:148px;}
-.ob-sub-erp{background:#eff6ff;border:1.5px solid var(--blue);color:#1d4ed8;min-width:132px;}
-.ob-sub-crm{background:#f5f3ff;border:1.5px solid var(--purple);color:#5b21b6;min-width:132px;}
-.ob-sub-epm{background:#f0fdf4;border:1.5px solid var(--green);color:#065f46;min-width:132px;}
-.ob-sub-adp{background:#fff7ed;border:1.5px solid var(--orange);color:#9a3412;min-width:132px;}
-.ob-rsh{background:#f8fafc;border:1.5px solid var(--border);color:var(--slate);min-width:132px;}
-.ob-si-erp{background:#eff6ff;border:1.5px solid #93c5fd;color:#1e40af;min-width:132px;}
-.ob-si-crm{background:#f5f3ff;border:1.5px solid #c4b5fd;color:#5b21b6;min-width:132px;}
-.ob-si-epm{background:#f0fdf4;border:1.5px solid #6ee7b7;color:#065f46;min-width:132px;}
-.ob-adp-role{background:#fff7ed;border:1.5px solid #fb923c;color:#9a3412;min-width:132px;}
-.ob-hackett{background:#fefce8;border:1.5px solid #ca8a04;color:#713f12;min-width:132px;}
+.ob-sub-erp{background:#eff6ff;border:1.5px solid var(--blue);color:#1d4ed8;min-width:100px;}
+.ob-sub-crm{background:#f5f3ff;border:1.5px solid var(--purple);color:#5b21b6;min-width:100px;}
+.ob-sub-epm{background:#f0fdf4;border:1.5px solid var(--green);color:#065f46;min-width:100px;}
+.ob-sub-adp{background:#fff7ed;border:1.5px solid var(--orange);color:#9a3412;min-width:100px;}
+.ob-rsh{background:#f8fafc;border:1.5px solid var(--border);color:var(--slate);min-width:100px;}
+.ob-si-erp{background:#eff6ff;border:1.5px solid #93c5fd;color:#1e40af;min-width:100px;}
+.ob-si-crm{background:#f5f3ff;border:1.5px solid #c4b5fd;color:#5b21b6;min-width:100px;}
+.ob-si-epm{background:#f0fdf4;border:1.5px solid #6ee7b7;color:#065f46;min-width:100px;}
+.ob-adp-role{background:#fff7ed;border:1.5px solid #fb923c;color:#9a3412;min-width:100px;}
+.ob-hackett{background:#fefce8;border:1.5px solid #ca8a04;color:#713f12;min-width:100px;}
 .ob-process{background:#ecfdf5;border:2px solid var(--teal);color:#134e4a;min-width:138px;font-weight:700;}
 .ob-cm{background:var(--navy2);color:#fff;min-width:138px;}
 .vline{width:2px;height:18px;background:#cbd5e1;margin:0 auto;}
@@ -167,30 +167,33 @@ input[type=range]{width:100%;cursor:pointer;height:4px;}
   <div class="card">
     <div class="card-title">Program Organization Structure <span>Oracle Fusion Cloud ERP · CRM · EPM · ADP Lyric</span></div>
     <div class="org-wrap">
-      <div style="min-width:1280px;">
+      <div style="min-width:1500px;">
 
         <!-- ENTERPRISE TRANSFORMATION TEAM HEADER -->
         <div style="display:flex;justify-content:center;margin-bottom:0;">
           <div class="org-box ob-enterprise">
             <div class="ob-label">Enterprise Transformation Team</div>
-            <div class="ob-sub">RS&amp;H · Oracle Fusion Cloud &amp; ADP Lyric Program</div>
+            <div class="ob-sub">RS&amp;H · Project Velocity</div>
           </div>
         </div>
 
-        <!-- Fork from ETT down to Technology Owner (left) and Business Process Owner (right) -->
-        <!-- Left org is flex:1 of (1280-440)=840px → center at ~405px; Right org is 440px starting at ~840px → center at ~1074px -->
-        <div style="position:relative;height:22px;width:1280px;margin:0 auto;">
+        <!-- Fixed-width inner wrapper so fork connector always aligns with two-orgs layout regardless of browser width -->
+        <div style="width:1500px;margin:0 auto;">
+
+        <!-- Fork from ETT → Technology Owner (left) and Business Process Owner (right) -->
+        <!-- Left org (flex:1) = 1500-400 = 1100px → center at 550px = 36.7%; BPO center at 1100+200=1300px → right 13.3% -->
+        <div style="position:relative;height:22px;">
           <div style="position:absolute;top:0;left:50%;width:2px;height:10px;background:#cbd5e1;transform:translateX(-50%);"></div>
-          <div style="position:absolute;top:10px;left:32%;right:16%;height:2px;background:#cbd5e1;"></div>
-          <div style="position:absolute;top:10px;left:32%;width:2px;height:12px;background:#cbd5e1;"></div>
-          <div style="position:absolute;top:10px;right:16%;width:2px;height:12px;background:#cbd5e1;"></div>
+          <div style="position:absolute;top:10px;left:37%;right:13%;height:2px;background:#cbd5e1;"></div>
+          <div style="position:absolute;top:10px;left:37%;width:2px;height:12px;background:#cbd5e1;"></div>
+          <div style="position:absolute;top:10px;right:13%;width:2px;height:12px;background:#cbd5e1;"></div>
         </div>
 
         <!-- TWO ORGS SIDE BY SIDE -->
         <div style="display:flex;gap:0;align-items:flex-start;">
 
           <!-- LEFT: TECHNOLOGY TEAM -->
-          <div style="display:flex;flex-direction:column;align-items:center;flex:1;padding:0 28px 0 0;border-right:2px solid #cbd5e1;">
+          <div style="display:flex;flex-direction:column;align-items:center;flex:1;padding:0 20px 0 0;border-right:2px solid #cbd5e1;">
 
             <div class="org-box ob-owner">
               <div class="ob-label">Technology Owner</div>
@@ -198,85 +201,121 @@ input[type=range]{width:100%;cursor:pointer;height:4px;}
             </div>
             <div class="vline"></div>
 
-            <div class="org-box ob-pgm">
-              <div class="ob-label">Program Manager</div>
-              <div class="ob-sub">RS&amp;H · Full Portfolio Oversight</div>
-            </div>
-            <div class="vline"></div>
-
-            <div class="org-box ob-support">
-              <div class="ob-label">Project Admin / PMO Coordinator</div>
-              <div class="ob-sub">RS&amp;H · Scheduling &amp; Coordination</div>
-            </div>
-
-            <!-- 4-workstream connector -->
-            <div style="position:relative;height:22px;width:600px;margin-top:18px;">
-              <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:560px;height:2px;background:#cbd5e1;"></div>
-              <div style="position:absolute;top:0;left:calc(50% - 280px);width:2px;height:22px;background:#cbd5e1;"></div>
-              <div style="position:absolute;top:0;left:calc(50% - 93px);width:2px;height:22px;background:#cbd5e1;"></div>
-              <div style="position:absolute;top:0;left:calc(50% + 93px);width:2px;height:22px;background:#cbd5e1;"></div>
-              <div style="position:absolute;top:0;left:calc(50% + 280px);width:2px;height:22px;background:#cbd5e1;"></div>
+            <!-- Program Manager centered; Project Admin floats right via dashed connector -->
+            <div style="position:relative;">
+              <div class="org-box ob-pgm" style="min-width:190px;">
+                <div class="ob-label">Program Manager</div>
+                <div class="ob-sub">RS&amp;H · Full Portfolio Oversight</div>
+              </div>
+              <div style="position:absolute;left:100%;top:50%;transform:translateY(-50%);display:flex;align-items:center;">
+                <div style="width:20px;border-top:2px dashed #94a3b8;flex-shrink:0;"></div>
+                <div class="org-box ob-support" style="min-width:160px;white-space:nowrap;">
+                  <div class="ob-label">Project Admin / PMO</div>
+                  <div class="ob-sub">RS&amp;H · Scheduling &amp; Coordination</div>
+                </div>
+              </div>
             </div>
 
-            <div class="ws-row" style="margin-top:22px;">
+            <!-- 4-workstream connector: 4 cols × 240px + 3 gaps × 16px = 1008px total -->
+            <!-- Centers at: 120, 376, 632, 888 px from left -->
+            <div style="position:relative;height:40px;width:1008px;">
+              <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:2px;height:18px;background:#cbd5e1;"></div>
+              <div style="position:absolute;top:18px;left:120px;right:120px;height:2px;background:#cbd5e1;"></div>
+              <div style="position:absolute;top:18px;left:120px;width:2px;height:22px;background:#cbd5e1;"></div>
+              <div style="position:absolute;top:18px;left:376px;width:2px;height:22px;background:#cbd5e1;"></div>
+              <div style="position:absolute;top:18px;left:632px;width:2px;height:22px;background:#cbd5e1;"></div>
+              <div style="position:absolute;top:18px;left:888px;width:2px;height:22px;background:#cbd5e1;"></div>
+            </div>
+
+            <div class="ws-row" style="margin-top:0;">
 
               <!-- ERP -->
-              <div class="ws-col">
-                <div class="org-box ob-erp"><div class="ob-label">ERP Workstream</div><div class="ob-sub">Financials / SCM / HCM</div></div>
-                <div class="vline"></div>
-                <div class="org-box ob-sub-erp"><div class="ob-label">SI PM (ERP)</div><div class="ob-sub">System Integrator Lead</div></div>
-                <div class="vline" style="height:9px;"></div>
-                <div class="org-box ob-rsh"><div class="ob-label">Technology (ERP)</div><div class="ob-sub">RS&amp;H · Data, Integration &amp; Architecture</div></div>
-                <div class="vline" style="height:9px;"></div>
-                <div class="org-box ob-si-erp"><div class="ob-label">Functional Consultant</div><div class="ob-sub">SI · ERP Config</div></div>
-                <div class="vline" style="height:9px;"></div>
-                <div class="org-box ob-si-erp"><div class="ob-label">Integration Developer</div><div class="ob-sub">SI · ERP Integrations</div></div>
-                <div class="vline" style="height:9px;"></div>
-                <div class="org-box ob-si-erp"><div class="ob-label">Data Migration Lead</div><div class="ob-sub">SI · ERP Data</div></div>
+              <div class="ws-col" style="width:240px;">
+                <div class="org-box ob-erp" style="width:100%;"><div class="ob-label">ERP Workstream</div><div class="ob-sub">Core Financials and Projects</div></div>
+                <div style="position:relative;height:22px;width:220px;">
+                  <div style="position:absolute;top:0;left:50%;width:2px;height:8px;background:#cbd5e1;transform:translateX(-50%);"></div>
+                  <div style="position:absolute;top:8px;left:10%;right:10%;height:2px;background:#cbd5e1;"></div>
+                  <div style="position:absolute;top:8px;left:10%;width:2px;height:14px;background:#cbd5e1;"></div>
+                  <div style="position:absolute;top:8px;right:10%;width:2px;height:14px;background:#cbd5e1;"></div>
+                </div>
+                <div style="display:flex;gap:8px;margin-top:22px;align-items:flex-start;">
+                  <div class="ws-col" style="width:106px;">
+                    <div class="org-box ob-rsh" style="width:100%;"><div class="ob-label">Technology Team</div><div class="ob-sub">RS&amp;H · Data, Integration &amp; Architecture</div></div>
+                  </div>
+                  <div class="ws-col" style="width:106px;">
+                    <div class="org-box ob-sub-erp" style="width:100%;"><div class="ob-label">SI PM (ERP)</div><div class="ob-sub">System Integrator Lead</div></div>
+                    <div class="vline" style="height:9px;"></div>
+                    <div class="org-box ob-si-erp" style="width:100%;"><div class="ob-label">Functional Consultant</div><div class="ob-sub">SI · ERP Config</div></div>
+                    <div class="vline" style="height:9px;"></div>
+                    <div class="org-box ob-si-erp" style="width:100%;"><div class="ob-label">Integration Developer</div><div class="ob-sub">SI · ERP Integrations</div></div>
+                    <div class="vline" style="height:9px;"></div>
+                    <div class="org-box ob-si-erp" style="width:100%;"><div class="ob-label">Data Migration Lead</div><div class="ob-sub">SI · ERP Data</div></div>
+                  </div>
+                </div>
               </div>
 
               <!-- CRM -->
-              <div class="ws-col">
-                <div class="org-box ob-crm"><div class="ob-label">CRM Workstream</div><div class="ob-sub">Sales / Service / Mktg</div></div>
-                <div class="vline"></div>
-                <div class="org-box ob-sub-crm"><div class="ob-label">SI PM (CRM)</div><div class="ob-sub">System Integrator Lead</div></div>
-                <div class="vline" style="height:9px;"></div>
-                <div class="org-box ob-rsh"><div class="ob-label">Technology (CRM)</div><div class="ob-sub">RS&amp;H · Data, Integration &amp; Architecture</div></div>
-                <div class="vline" style="height:9px;"></div>
-                <div class="org-box ob-si-crm"><div class="ob-label">Functional Consultant</div><div class="ob-sub">SI · CRM Config</div></div>
-                <div class="vline" style="height:9px;"></div>
-                <div class="org-box ob-si-crm"><div class="ob-label">Integration Developer</div><div class="ob-sub">SI · CRM Integrations</div></div>
-                <div class="vline" style="height:9px;"></div>
-                <div class="org-box ob-si-crm"><div class="ob-label">Data Migration Lead</div><div class="ob-sub">SI · CRM Data</div></div>
+              <div class="ws-col" style="width:240px;">
+                <div class="org-box ob-crm" style="width:100%;"><div class="ob-label">CRM Workstream</div><div class="ob-sub">Sales / Service / Mktg</div></div>
+                <div style="position:relative;height:22px;width:220px;">
+                  <div style="position:absolute;top:0;left:50%;width:2px;height:8px;background:#cbd5e1;transform:translateX(-50%);"></div>
+                  <div style="position:absolute;top:8px;left:10%;right:10%;height:2px;background:#cbd5e1;"></div>
+                  <div style="position:absolute;top:8px;left:10%;width:2px;height:14px;background:#cbd5e1;"></div>
+                  <div style="position:absolute;top:8px;right:10%;width:2px;height:14px;background:#cbd5e1;"></div>
+                </div>
+                <div style="display:flex;gap:8px;margin-top:22px;align-items:flex-start;">
+                  <div class="ws-col" style="width:106px;">
+                    <div class="org-box ob-rsh" style="width:100%;"><div class="ob-label">Technology Team</div><div class="ob-sub">RS&amp;H · Data, Integration &amp; Architecture</div></div>
+                  </div>
+                  <div class="ws-col" style="width:106px;">
+                    <div class="org-box ob-sub-crm" style="width:100%;"><div class="ob-label">SI PM (CRM)</div><div class="ob-sub">System Integrator Lead</div></div>
+                    <div class="vline" style="height:9px;"></div>
+                    <div class="org-box ob-si-crm" style="width:100%;"><div class="ob-label">Functional Consultant</div><div class="ob-sub">SI · CRM Config</div></div>
+                    <div class="vline" style="height:9px;"></div>
+                    <div class="org-box ob-si-crm" style="width:100%;"><div class="ob-label">Integration Developer</div><div class="ob-sub">SI · CRM Integrations</div></div>
+                    <div class="vline" style="height:9px;"></div>
+                    <div class="org-box ob-si-crm" style="width:100%;"><div class="ob-label">Data Migration Lead</div><div class="ob-sub">SI · CRM Data</div></div>
+                  </div>
+                </div>
               </div>
 
               <!-- EPM -->
-              <div class="ws-col">
-                <div class="org-box ob-epm"><div class="ob-label">EPM Workstream</div><div class="ob-sub">Planning / Budgeting / Close</div></div>
-                <div class="vline"></div>
-                <div class="org-box ob-sub-epm"><div class="ob-label">SI PM (EPM)</div><div class="ob-sub">System Integrator Lead</div></div>
-                <div class="vline" style="height:9px;"></div>
-                <div class="org-box ob-rsh"><div class="ob-label">Technology (EPM)</div><div class="ob-sub">RS&amp;H · Data, Integration &amp; Architecture</div></div>
-                <div class="vline" style="height:9px;"></div>
-                <div class="org-box ob-si-epm"><div class="ob-label">Functional Consultant</div><div class="ob-sub">SI · EPM Config</div></div>
-                <div class="vline" style="height:9px;"></div>
-                <div class="org-box ob-si-epm"><div class="ob-label">Integration Developer</div><div class="ob-sub">SI · EPM Integrations</div></div>
-                <div class="vline" style="height:9px;"></div>
-                <div class="org-box ob-si-epm"><div class="ob-label">Data Migration Lead</div><div class="ob-sub">SI · EPM Data</div></div>
+              <div class="ws-col" style="width:240px;">
+                <div class="org-box ob-epm" style="width:100%;"><div class="ob-label">EPM Workstream</div><div class="ob-sub">Planning / Budgeting / Forecasting</div></div>
+                <div style="position:relative;height:22px;width:220px;">
+                  <div style="position:absolute;top:0;left:50%;width:2px;height:8px;background:#cbd5e1;transform:translateX(-50%);"></div>
+                  <div style="position:absolute;top:8px;left:10%;right:10%;height:2px;background:#cbd5e1;"></div>
+                  <div style="position:absolute;top:8px;left:10%;width:2px;height:14px;background:#cbd5e1;"></div>
+                  <div style="position:absolute;top:8px;right:10%;width:2px;height:14px;background:#cbd5e1;"></div>
+                </div>
+                <div style="display:flex;gap:8px;margin-top:22px;align-items:flex-start;">
+                  <div class="ws-col" style="width:106px;">
+                    <div class="org-box ob-rsh" style="width:100%;"><div class="ob-label">Technology Team</div><div class="ob-sub">RS&amp;H · Data, Integration &amp; Architecture</div></div>
+                  </div>
+                  <div class="ws-col" style="width:106px;">
+                    <div class="org-box ob-sub-epm" style="width:100%;"><div class="ob-label">SI PM (EPM)</div><div class="ob-sub">System Integrator Lead</div></div>
+                    <div class="vline" style="height:9px;"></div>
+                    <div class="org-box ob-si-epm" style="width:100%;"><div class="ob-label">Functional Consultant</div><div class="ob-sub">SI · EPM Config</div></div>
+                    <div class="vline" style="height:9px;"></div>
+                    <div class="org-box ob-si-epm" style="width:100%;"><div class="ob-label">Integration Developer</div><div class="ob-sub">SI · EPM Integrations</div></div>
+                    <div class="vline" style="height:9px;"></div>
+                    <div class="org-box ob-si-epm" style="width:100%;"><div class="ob-label">Data Migration Lead</div><div class="ob-sub">SI · EPM Data</div></div>
+                  </div>
+                </div>
               </div>
 
               <!-- ADP LYRIC -->
-              <div class="ws-col">
-                <div class="org-box ob-adp-ws"><div class="ob-label">ADP Lyric Workstream</div><div class="ob-sub">HCM / Payroll / Workforce</div></div>
-                <div style="position:relative;height:22px;width:290px;margin-top:18px;">
+              <div class="ws-col" style="width:240px;">
+                <div class="org-box ob-adp-ws" style="width:100%;"><div class="ob-label">ADP Lyric Workstream</div><div class="ob-sub">HCM / Payroll / Recruiting/Talent</div></div>
+                <div style="position:relative;height:22px;width:220px;">
                   <div style="position:absolute;top:0;left:50%;width:2px;height:8px;background:#cbd5e1;transform:translateX(-50%);"></div>
-                  <div style="position:absolute;top:8px;left:15%;right:15%;height:2px;background:#cbd5e1;"></div>
-                  <div style="position:absolute;top:8px;left:15%;width:2px;height:14px;background:#cbd5e1;"></div>
-                  <div style="position:absolute;top:8px;right:15%;width:2px;height:14px;background:#cbd5e1;"></div>
+                  <div style="position:absolute;top:8px;left:10%;right:10%;height:2px;background:#cbd5e1;"></div>
+                  <div style="position:absolute;top:8px;left:10%;width:2px;height:14px;background:#cbd5e1;"></div>
+                  <div style="position:absolute;top:8px;right:10%;width:2px;height:14px;background:#cbd5e1;"></div>
                 </div>
-                <div style="display:flex;gap:10px;margin-top:22px;">
-                  <div class="org-box ob-rsh" style="min-width:126px;"><div class="ob-label">RS&amp;H Business Team</div><div class="ob-sub">RS&amp;H · HCM Process</div></div>
-                  <div class="org-box ob-adp-role" style="min-width:126px;"><div class="ob-label">ADP Implementation Team</div><div class="ob-sub">ADP · Lyric Delivery</div></div>
+                <div style="display:flex;gap:8px;margin-top:22px;align-items:flex-start;">
+                  <div class="org-box ob-rsh" style="width:106px;"><div class="ob-label">HCM Team</div><div class="ob-sub">RS&amp;H · HCM</div></div>
+                  <div class="org-box ob-adp-role" style="width:106px;"><div class="ob-label">ADP Implementation Team</div><div class="ob-sub">ADP · Lyric Delivery</div></div>
                 </div>
               </div>
 
@@ -284,7 +323,7 @@ input[type=range]{width:100%;cursor:pointer;height:4px;}
           </div><!-- /left org -->
 
           <!-- RIGHT: PROCESS & CHANGE MANAGEMENT -->
-          <div style="display:flex;flex-direction:column;align-items:center;width:440px;padding:0 0 0 28px;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:400px;padding:0 0 0 20px;">
 
             <div class="org-box ob-bpo">
               <div class="ob-label">Business Process Owner</div>
@@ -292,42 +331,42 @@ input[type=range]{width:100%;cursor:pointer;height:4px;}
             </div>
 
             <!-- Fork to Process Team + Change Lead -->
-            <div style="position:relative;height:22px;width:360px;margin-top:18px;">
+            <div style="position:relative;height:22px;width:350px;margin-top:18px;">
               <div style="position:absolute;top:0;left:50%;width:2px;height:8px;background:#cbd5e1;transform:translateX(-50%);"></div>
               <div style="position:absolute;top:8px;left:10%;right:10%;height:2px;background:#cbd5e1;"></div>
               <div style="position:absolute;top:8px;left:10%;width:2px;height:14px;background:#cbd5e1;"></div>
               <div style="position:absolute;top:8px;right:10%;width:2px;height:14px;background:#cbd5e1;"></div>
             </div>
 
-            <div style="display:flex;gap:16px;margin-top:22px;align-items:flex-start;">
+            <div style="display:flex;gap:12px;margin-top:22px;align-items:flex-start;">
 
               <!-- Process Team branch -->
-              <div class="ws-col" style="width:192px;">
+              <div class="ws-col" style="width:163px;">
                 <div class="org-box ob-process" style="width:100%;"><div class="ob-label">Process Team</div><div class="ob-sub">RS&amp;H · Business Process Owners</div></div>
-                <div style="position:relative;height:22px;width:180px;margin-top:16px;">
+                <div style="position:relative;height:22px;width:150px;margin-top:16px;">
                   <div style="position:absolute;top:0;left:50%;width:2px;height:8px;background:#cbd5e1;transform:translateX(-50%);"></div>
                   <div style="position:absolute;top:8px;left:8%;right:8%;height:2px;background:#cbd5e1;"></div>
                   <div style="position:absolute;top:8px;left:8%;width:2px;height:14px;background:#cbd5e1;"></div>
                   <div style="position:absolute;top:8px;right:8%;width:2px;height:14px;background:#cbd5e1;"></div>
                 </div>
-                <div style="display:flex;gap:8px;margin-top:22px;">
-                  <div class="org-box ob-rsh" style="min-width:82px;font-size:9.5px;"><div class="ob-label" style="font-size:9px;">RS&amp;H Process Analyst</div><div class="ob-sub">RS&amp;H</div></div>
-                  <div class="org-box ob-hackett" style="min-width:82px;"><div class="ob-label" style="font-size:9px;">Hackett Process Team</div><div class="ob-sub">Hackett</div></div>
+                <div style="display:flex;gap:6px;margin-top:22px;">
+                  <div class="org-box ob-rsh" style="min-width:68px;"><div class="ob-label" style="font-size:9px;">RS&amp;H Process Analyst</div><div class="ob-sub">RS&amp;H</div></div>
+                  <div class="org-box ob-hackett" style="min-width:68px;"><div class="ob-label" style="font-size:9px;">Hackett Process Team</div><div class="ob-sub">Hackett</div></div>
                 </div>
               </div>
 
               <!-- Change Management Lead branch -->
-              <div class="ws-col" style="width:192px;">
+              <div class="ws-col" style="width:163px;">
                 <div class="org-box ob-cm" style="width:100%;"><div class="ob-label">Change Mgmt Lead</div><div class="ob-sub">RS&amp;H · OCM · All Workstreams</div></div>
-                <div style="position:relative;height:22px;width:180px;margin-top:16px;">
+                <div style="position:relative;height:22px;width:150px;margin-top:16px;">
                   <div style="position:absolute;top:0;left:50%;width:2px;height:8px;background:#cbd5e1;transform:translateX(-50%);"></div>
                   <div style="position:absolute;top:8px;left:8%;right:8%;height:2px;background:#cbd5e1;"></div>
                   <div style="position:absolute;top:8px;left:8%;width:2px;height:14px;background:#cbd5e1;"></div>
                   <div style="position:absolute;top:8px;right:8%;width:2px;height:14px;background:#cbd5e1;"></div>
                 </div>
-                <div style="display:flex;gap:8px;margin-top:22px;">
-                  <div class="org-box ob-hackett" style="min-width:82px;"><div class="ob-label" style="font-size:9px;">Hackett Change Team</div><div class="ob-sub">Hackett</div></div>
-                  <div class="org-box ob-rsh" style="min-width:82px;"><div class="ob-label" style="font-size:9px;">HCM Change Manager</div><div class="ob-sub">RS&amp;H</div></div>
+                <div style="display:flex;gap:6px;margin-top:22px;">
+                  <div class="org-box ob-hackett" style="min-width:68px;"><div class="ob-label" style="font-size:9px;">Hackett Change Team</div><div class="ob-sub">Hackett</div></div>
+                  <div class="org-box ob-rsh" style="min-width:68px;"><div class="ob-label" style="font-size:9px;">HCM Change Manager</div><div class="ob-sub">RS&amp;H</div></div>
                 </div>
               </div>
 
@@ -335,10 +374,12 @@ input[type=range]{width:100%;cursor:pointer;height:4px;}
           </div><!-- /right org -->
 
         </div><!-- /two orgs -->
+        </div><!-- /fixed 1500px wrapper -->
 
         <!-- Legend -->
         <div style="margin-top:24px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;font-size:11px;color:var(--muted);">
           <span style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:20px;border-top:2px solid #cbd5e1;"></span> Reporting line</span>
+          <span style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:20px;border-top:2px dashed #94a3b8;"></span> Advisory / Peer</span>
           <span style="display:flex;align-items:center;gap:5px;"><div style="width:12px;height:12px;background:#f8fafc;border:1.5px solid var(--border);border-radius:3px;"></div> RS&amp;H</span>
           <span style="display:flex;align-items:center;gap:5px;"><div style="width:12px;height:12px;background:#eff6ff;border:1.5px solid #93c5fd;border-radius:3px;"></div> SI Technology</span>
           <span style="display:flex;align-items:center;gap:5px;"><div style="width:12px;height:12px;background:#fefce8;border:1.5px solid #ca8a04;border-radius:3px;"></div> Hackett</span>
@@ -437,25 +478,25 @@ const RESOURCES=[
    desc:'Manages scheduling, meeting coordination, action item tracking, and document management across all workstreams.'},
   // ERP
   {id:'erp_pm',role:'SI PM (ERP)',cat:'ERP',type:'SI',alloc:[100,100,100,100,75],desc:'System Integrator PM accountable for ERP workstream delivery — sprint planning, SI resourcing, and ERP governance with RS&H.'},
-  {id:'erp_tl',role:'Technology (ERP)',cat:'ERP',type:'RS&H',alloc:[50,100,100,75,50],desc:'RS&H technical authority for ERP. Oversees data, integration, and architecture across the ERP workstream. Reviews integration designs, data migration approach, and security architecture.'},
+  {id:'erp_tl',role:'Technology Team (ERP)',cat:'ERP',type:'RS&H',alloc:[50,100,100,75,50],desc:'RS&H technical authority for ERP. Oversees data, integration, and architecture across the ERP workstream. Reviews integration designs, data migration approach, and security architecture.'},
   {id:'erp_fc',role:'Functional Consultant (ERP)',cat:'ERP',type:'SI',alloc:[25,100,100,75,25],desc:'Configures Oracle Fusion ERP modules (Financials, SCM, HCM). Leads fit-gap analysis and functional testing.'},
   {id:'erp_id',role:'Integration Developer (ERP)',cat:'ERP',type:'SI',alloc:[0,75,100,100,50],desc:'Develops Oracle Integration Cloud (OIC) connections and APIs for ERP. Responsible for integration testing.'},
   {id:'erp_dm',role:'Data Migration Lead (ERP)',cat:'ERP',type:'SI',alloc:[25,75,100,100,25],desc:'Manages data extraction, transformation, and load (ETL) for ERP. Oversees data quality and cutover activities.'},
   // CRM
   {id:'crm_pm',role:'SI PM (CRM)',cat:'CRM',type:'SI',alloc:[100,100,100,100,75],desc:'System Integrator PM accountable for CRM workstream delivery and CRM governance with RS&H.'},
-  {id:'crm_tl',role:'Technology (CRM)',cat:'CRM',type:'RS&H',alloc:[50,100,100,75,50],desc:'RS&H technical authority for CRM. Oversees data, integration, and architecture across the CRM workstream. Manages ERP/CRM integration design, data model, and API architecture.'},
+  {id:'crm_tl',role:'Technology Team (CRM)',cat:'CRM',type:'RS&H',alloc:[50,100,100,75,50],desc:'RS&H technical authority for CRM. Oversees data, integration, and architecture across the CRM workstream. Manages ERP/CRM integration design, data model, and API architecture.'},
   {id:'crm_fc',role:'Functional Consultant (CRM)',cat:'CRM',type:'SI',alloc:[25,100,100,75,25],desc:'Configures Oracle Fusion CRM (Sales, Service, Marketing). Leads fit-gap analysis and functional testing.'},
   {id:'crm_id',role:'Integration Developer (CRM)',cat:'CRM',type:'SI',alloc:[0,75,100,100,50],desc:'Develops integrations between Oracle CRM and other enterprise systems.'},
   {id:'crm_dm',role:'Data Migration Lead (CRM)',cat:'CRM',type:'SI',alloc:[25,75,100,100,25],desc:'Manages data migration for CRM (accounts, contacts, opportunities). Oversees data quality and cutover.'},
   // EPM
   {id:'epm_pm',role:'SI PM (EPM)',cat:'EPM',type:'SI',alloc:[100,100,100,100,75],desc:'System Integrator PM accountable for EPM workstream delivery and EPM governance with RS&H.'},
-  {id:'epm_tl',role:'Technology (EPM)',cat:'EPM',type:'RS&H',alloc:[50,100,100,75,50],desc:'RS&H technical authority for EPM. Oversees data, integration, and architecture for the EPM workstream. Manages financial data integration from ERP to EPM and planning model architecture.'},
+  {id:'epm_tl',role:'Technology Team (EPM)',cat:'EPM',type:'RS&H',alloc:[50,100,100,75,50],desc:'RS&H technical authority for EPM. Oversees data, integration, and architecture for the EPM workstream. Manages financial data integration from ERP to EPM and planning model architecture.'},
   {id:'epm_fc',role:'Functional Consultant (EPM)',cat:'EPM',type:'SI',alloc:[25,100,100,75,25],desc:'Configures Oracle EPM (Planning, Budgeting, Forecasting, Close). Leads model design and functional testing.'},
   {id:'epm_id',role:'Integration Developer (EPM)',cat:'EPM',type:'SI',alloc:[0,75,100,100,50],desc:'Develops data pipelines between ERP and EPM for financial reporting and planning.'},
   {id:'epm_dm',role:'Data Migration Lead (EPM)',cat:'EPM',type:'SI',alloc:[25,75,100,100,25],desc:'Manages EPM data setup including hierarchies, dimensions, and historical data loads.'},
   // ADP Lyric
-  {id:'adp_bt',role:'RS&H Business Team',cat:'ADP',type:'RS&H',alloc:[50,100,100,100,75],
-   desc:'RS&H business team supporting ADP Lyric HCM/Payroll implementation. Provides process requirements, subject matter expertise, and drives RS&H business readiness for go-live.'},
+  {id:'adp_bt',role:'HCM Team',cat:'ADP',type:'RS&H',alloc:[50,100,100,100,75],
+   desc:'RS&H HCM team supporting ADP Lyric HCM/Payroll implementation. Provides process requirements, subject matter expertise, and drives RS&H business readiness for go-live.'},
   {id:'adp_impl',role:'ADP Implementation Team',cat:'ADP',type:'ADP',alloc:[100,100,100,100,75],
    desc:'ADP implementation team responsible for Lyric HCM/Payroll configuration, integrations, and deployment. Accountable for ADP workstream technical delivery and quality.'},
   // Process & Change
@@ -604,7 +645,7 @@ function applyAndView(){
 
 function renderRaci(){
   const cols=['pgm','padmin','cml','sipm','tl','bl'];
-  const colLabels={pgm:'Program Mgr',padmin:'Project Admin',cml:'CM Lead',sipm:'SI PMs (per WS)',tl:'Technology (per WS)',bl:'Process Analysts'};
+  const colLabels={pgm:'Program Mgr',padmin:'Project Admin',cml:'CM Lead',sipm:'SI PMs (per WS)',tl:'Technology Team (per WS)',bl:'Process Analysts'};
   let html=`<table><thead><tr><th style="text-align:left;min-width:220px;">Activity</th>${cols.map(c=>`<th style="min-width:105px;">${colLabels[c]}</th>`).join('')}</tr></thead><tbody>`;
   RACI.forEach(row=>{
     html+=`<tr><td style="font-weight:500;text-align:left;">${row.activity}</td>`;
